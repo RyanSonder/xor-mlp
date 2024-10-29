@@ -12,11 +12,16 @@ def main():
     network = initialize_network()
 
     # Train the network
-    train_network(network, training_data, epochs=500000)
+    train_network(network, training_data, epochs=100000)
 
-    # Print the results
-    for i, result in enumerate(evaluate_network(network, training_data)):
-        print(f"Input: {training_data[0][i]} | Expected: {training_data[1][i][0]} | Predicted: {result[0]:.8f}")
+    print("Network fully trained.")
+
+    while True:
+        ans = input("Print results? (y/n) ")
+        if ans != 'y':
+            break
+        for i, result in enumerate(evaluate_network(network, training_data)):
+            print(f"Input: {training_data[0][i]} | Expected: {training_data[1][i][0]} | Predicted: {result[0]:.8f}")
 
 
 def initialize_network() -> dict:

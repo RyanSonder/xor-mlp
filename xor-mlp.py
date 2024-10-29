@@ -12,11 +12,12 @@ def main():
     network = initialize_network()
 
     # Train the network
-    train_network(network, training_data, epochs=100000)
+    train_network(network, training_data, epochs=500000)
 
     # Print the results
     for i, result in enumerate(evaluate_network(network, training_data)):
-        print(f"Expected: {training_data[1][i][0]} | Predicted: {result[0]:.8f}")
+        print(f"Input: {training_data[0][i]} | Expected: {training_data[1][i][0]} | Predicted: {result[0]:.8f}")
+
 
 def initialize_network() -> dict:
     """Initializes a network with 2 hidden neurons and 1 output neuron."""
@@ -93,6 +94,7 @@ def back_propagation(network, inputs, targets):
 
 def train_network(network, training_data, epochs):
     """Trains the network on the data"""
+    
     for epoch in range(epochs):
         # Initialize inputs
         inputs, targets = training_data
@@ -100,6 +102,13 @@ def train_network(network, training_data, epochs):
         # Forward and backward propagation
         forward_propagation(network, inputs)
         back_propagation(network, inputs, targets)
+        
+        # Print progress at intervals
+        if epoch % 10000 == 0:
+            # Calculate and print the mean squared error
+            _, predictions = forward_propagation(network, inputs)
+            mse = mean_squared_error(predictions, targets)
+            print(f"Epoch {epoch}/{epochs} - Mean Squared Error: {mse:.6f}")
 
 
 def evaluate_network(network, test_data):

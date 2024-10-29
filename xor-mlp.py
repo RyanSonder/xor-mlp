@@ -15,8 +15,8 @@ def main():
     train_network(network, training_data, epochs=100000)
 
     # Print the results
-    print("Test Results:", evaluate_network(network, training_data))
-
+    for i, result in enumerate(evaluate_network(network, training_data)):
+        print(f"Expected: {training_data[1][i][0]} | Predicted: {result[0]:.8f}")
 
 def initialize_network() -> dict:
     """Initializes a network with 2 hidden neurons and 1 output neuron."""

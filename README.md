@@ -1,9 +1,5 @@
 # Multi-Layer Perceptron for XOR Logic Gate
 
-## Ryan Sonderman
-
-## COS 255 Homework 2
-
 This file has my implmentation of a multi-layer perceptron set up to train on data pertaining to the XOR logic gate. Minor alterations to the training data could change this model to work with AND, OR, and other two-input logic gates.
 
 As we discussed in class, the model uses repeated forward and backward propagation to to train. There are a couple of parameters that can be altered to slightly tweak the training, that being ```epochs```, the number of training sets performed, and ```learning_rate```, the proportion by which updates affect the network. Currently, those values are set to:

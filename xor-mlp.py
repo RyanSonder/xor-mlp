@@ -1,5 +1,5 @@
 import numpy as np
-
+import timeit
 
 def main():
     # Initialize training data
@@ -11,17 +11,18 @@ def main():
     # Initialize the network
     network = initialize_network()
 
-    # Train the network
-    train_network(network, training_data, epochs=100000)
+    # Measure the time for training
+    avg_train_time_ns = timeit.timeit(lambda: train_network(network, training_data, epochs=500000), number=1)
+    print(f"Training completed. Average training time: {avg_train_time_ns:.6f} s")
 
-    print("Network fully trained.")
+    # Measure evaluation time
+    avg_eval_time_ns = timeit.timeit(lambda: evaluate_and_print_results(network, training_data), number=100) * 1_000_000_000 / 100
+    print(f"Average evaluation time per run: {avg_eval_time_ns:.2f} ns")
 
-    while True:
-        ans = input("Print results? (y/n) ")
-        if ans != 'y':
-            break
-        for i, result in enumerate(evaluate_network(network, training_data)):
-            print(f"Input: {training_data[0][i]} | Expected: {training_data[1][i][0]} | Predicted: {result[0]:.8f}")
+def evaluate_and_print_results(network, training_data):
+    """Evaluates and prints network results on training data."""
+    for i, result in enumerate(evaluate_network(network, training_data)):
+        print(f"Input: {training_data[0][i]} | Expected: {training_data[1][i][0]} | Predicted: {result[0]:.8f}")
 
 
 def initialize_network() -> dict:

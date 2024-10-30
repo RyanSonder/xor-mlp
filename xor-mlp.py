@@ -16,13 +16,13 @@ def main():
     print(f"Training completed. Average training time: {avg_train_time_ns:.6f} s")
 
     # Measure evaluation time
-    avg_eval_time_ns = timeit.timeit(lambda: evaluate_and_print_results(network, training_data), number=100) * 1_000_000_000 / 100
-    print(f"Average evaluation time per run: {avg_eval_time_ns:.2f} ns")
-
-def evaluate_and_print_results(network, training_data):
-    """Evaluates and prints network results on training data."""
+    avg_eval_time_ns = timeit.timeit(lambda: evaluate_network(network, training_data), number=100_000) * 1_000_000_000 / 100_000
+    
+    # Print evaluation
     for i, result in enumerate(evaluate_network(network, training_data)):
         print(f"Input: {training_data[0][i]} | Expected: {training_data[1][i][0]} | Predicted: {result[0]:.8f}")
+    
+    print(f"Average evaluation time per run: {avg_eval_time_ns:.2f} ns")
 
 
 def initialize_network() -> dict:
